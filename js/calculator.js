@@ -28,8 +28,9 @@ function applyFinalGrade(lengthG, riskG, isSound){
   return lengthG;
 }
 function normalScores(v){
-  const travel = v.length * v.aadt;
-  const heavyTravel = v.length * v.heavyAadt;
+  const lengthKm = v.length / 1000;
+  const travel = lengthKm * v.aadt;
+  const heavyTravel = lengthKm * v.heavyAadt;
   return [
     ['주행거리계', travel, rangeScore(travel,[{max:80000,score:1.5},{min:80000,max:160000,score:2.5},{min:160000,max:320000,score:5},{min:320000,max:640000,score:7.5},{min:640000,score:10}])],
     ['입·출구 표고차', v.elevationDiff, rangeScore(v.elevationDiff,[{max:100,score:.5},{min:100,max:200,score:1},{min:200,max:300,score:1.5},{min:300,score:2}])],
@@ -47,8 +48,9 @@ function normalScores(v){
   ];
 }
 function smallScores(v){
-  const travel = v.length * v.aadt;
-  const smallTruckTravel = v.length * v.smallTruckAadt;
+  const lengthKm = v.length / 1000;
+  const travel = lengthKm * v.aadt;
+  const smallTruckTravel = lengthKm * v.smallTruckAadt;
   return [
     ['주행거리계', travel, rangeScore(travel,[{max:80000,score:1.5},{min:80000,max:160000,score:2.5},{min:160000,max:320000,score:5},{min:320000,max:640000,score:7.5},{min:640000,max:1280000,score:10},{min:1280000,max:2560000,score:12.5},{min:2560000,score:15}])],
     ['입·출구 표고차', v.elevationDiff, rangeScore(v.elevationDiff,[{max:100,score:.5},{min:100,max:200,score:1},{min:200,max:300,score:1.5},{min:300,max:400,score:2},{min:400,max:500,score:2.5},{min:500,score:3}])],
