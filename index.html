@@ -1,15 +1,81 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<title>터널 안전 수준 계산기 2026</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>도로터널 방재·환기시설 등급 산정기 2026</title>
+  <link rel="stylesheet" href="css/style.css" />
 </head>
-
 <body>
+  <header class="hero">
+    <div>
+      <p class="eyebrow">국토교통부예규 제461호 · 시행 2026.04.30</p>
+      <h1>도로터널 방재·환기시설 등급 산정기</h1>
+      <p>터널 연장등급, 위험도지수(X), 방재등급을 계산합니다.</p>
+    </div>
+  </header>
 
-<h1>터널 안전 수준 계산기 (2026)</h1>
+  <main class="wrap">
+    <section class="card">
+      <h2>1. 기본 입력</h2>
+      <div class="grid">
+        <label>터널 종류
+          <select id="tunnelType">
+            <option value="normal">일반 도로터널</option>
+            <option value="small">소형차 전용터널</option>
+          </select>
+        </label>
+        <label>터널연장 L (m)
+          <input id="length" type="number" min="0" value="1000" />
+        </label>
+        <label>튜브당 연평균일교통량 AADT (대/일)
+          <input id="aadt" type="number" min="0" value="20000" />
+        </label>
+        <label>방음터널 여부
+          <select id="soundTunnel">
+            <option value="no">아니오</option>
+            <option value="yes">예</option>
+          </select>
+        </label>
+      </div>
+    </section>
 
-<p>GitHub Pages 연결 테스트 성공!</p>
+    <section class="card">
+      <h2>2. 위험인자 입력</h2>
+      <div class="grid">
+        <label>입·출구 표고차 (m)<input id="elevationDiff" type="number" min="0" value="0" /></label>
+        <label>진입부 경사도 (%)<input id="approachGrade" type="number" min="0" step="0.1" value="0" /></label>
+        <label>터널높이 (m)<input id="height" type="number" min="0" step="0.1" value="7.5" /></label>
+        <label>터널곡선반경 (m)<input id="curveRadius" type="number" min="0" value="1800" /></label>
+        <label class="normal-only">대형차 혼입률 (%)<input id="heavyRate" type="number" min="0" step="0.1" value="10" /></label>
+        <label class="normal-only">대형차 통과대수 (대/일)<input id="heavyAadt" type="number" min="0" value="1000" /></label>
+        <label class="small-only hidden">소형화물 통과대수 (대/일)<input id="smallTruckAadt" type="number" min="0" value="500" /></label>
+        <label class="small-only hidden">배연구간 최대거리 (m)<input id="exhaustDistance" type="number" min="0" value="0" /></label>
+        <label class="small-only hidden">간이소방서 설치<select id="miniFireStation"><option value="yes">있음</option><option value="no">없음</option></select></label>
+        <label class="normal-only">위험물 감시시스템<select id="hazardMonitoring"><option value="yes">있음</option><option value="no">없음</option></select></label>
+        <label class="normal-only">위험물 유도시스템<select id="hazardGuidance"><option value="yes">있음</option><option value="no">없음</option></select></label>
+        <label>서비스수준<select id="los"><option value="A-C">LOS A~C</option><option value="D">LOS D</option><option value="E-F">LOS E~F</option></select></label>
+        <label>터널 내 합류/분류 개소<input id="mergeCount" type="number" min="0" value="0" /></label>
+        <label>진출부 1km 이내 교차로/신호등/TG<select id="exitControl"><option value="no">없음</option><option value="yes">있음</option></select></label>
+        <label>통행방식<select id="trafficDirection"><option value="oneWithShoulder">일방통행 · 갓길 있음</option><option value="oneNoShoulder">일방통행 · 갓길 없음</option><option value="twoWithShoulder">대면통행 · 갓길 있음</option><option value="twoNoShoulder">대면통행 · 갓길 없음</option></select></label>
+      </div>
+    </section>
 
+    <section class="actions">
+      <button id="calcBtn">계산하기</button>
+      <button id="printBtn" class="secondary">인쇄/PDF</button>
+      <button id="jsonBtn" class="secondary">JSON 저장</button>
+    </section>
+
+    <section id="result" class="card result"></section>
+
+    <section class="note">
+      <strong>주의:</strong> 본 산정기는 2026.04.30 지침 기준으로 구현 중인 초안입니다. 표 1.2.3~1.2.5의 시설별 설치기준은 다음 패키지에서 추가됩니다. 최종 판단은 공식 지침 원문으로 확인하세요.
+    </section>
+  </main>
+
+  <script src="data/safety2026.js"></script>
+  <script src="js/calculator.js"></script>
+  <script src="js/app.js"></script>
 </body>
 </html>
