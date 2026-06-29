@@ -59,3 +59,19 @@ button{border:0;border-radius:14px;padding:13px 18px;background:var(--brand2);co
 .ref-note{margin:12px 0 0;color:var(--muted);font-size:14px;background:#f8fafc;border:1px solid var(--line);border-radius:14px;padding:12px 14px}
 .legend{display:flex;gap:12px;flex-wrap:wrap;margin:4px 0 14px}.legend span{background:#f8fafc;border:1px solid var(--line);border-radius:999px;padding:8px 12px;font-weight:800;color:#334155}.legend b{color:var(--brand2)}
 @media print{.tabbar{display:none}.tab-panel{display:block!important}.tab-panel:not(.active){display:none!important}}
+
+
+/* V1.3 Facility criteria tables */
+.facility-legend{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:10px 0 16px}
+.facility-legend span{background:#f8fafc;border:1px solid var(--line);border-radius:999px;padding:8px 12px;font-weight:800;color:#334155}
+.mark.length{color:#111827}.mark.risk{color:#176b87}.mark.recommend{color:#b45309}
+.facility-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 18px}
+.facility-tab-btn{background:#fff;color:#243244;border:1px solid var(--line);box-shadow:none;padding:10px 14px}
+.facility-tab-btn.active{background:var(--brand2);color:#fff;border-color:var(--brand2)}
+.facility-tab-panel{display:none}.facility-tab-panel.active{display:block}
+.facility-table table{min-width:980px}
+.facility-table th,.facility-table td{text-align:center;vertical-align:middle}
+.facility-table td:nth-child(2),.facility-table td:last-child{text-align:left}
+.facility-table td:nth-child(3),.facility-table td:nth-child(4),.facility-table td:nth-child(5),.facility-table td:nth-child(6){font-weight:900;font-size:18px;letter-spacing:.02em}
+.facility-notes{margin:12px 0 0;padding-left:22px;color:#475569;font-size:14px}
+.facility-notes li{margin:4px 0}

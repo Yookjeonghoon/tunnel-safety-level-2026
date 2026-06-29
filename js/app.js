@@ -357,3 +357,15 @@ function installTabs(){
   });
 }
 installTabs();
+
+
+// Facility criteria tabs
+document.querySelectorAll('.facility-tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const target = btn.dataset.facilityTab;
+    document.querySelectorAll('.facility-tab-btn').forEach(b => b.classList.toggle('active', b === btn));
+    document.querySelectorAll('.facility-tab-panel').forEach(panel => {
+      panel.classList.toggle('active', panel.id === `facility-${target}`);
+    });
+  });
+});
