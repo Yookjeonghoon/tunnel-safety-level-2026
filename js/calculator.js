@@ -39,7 +39,7 @@ function normalScores(v){
   const heavyTravel = lengthKm * v.heavyAadt;
   return [
     ['주행거리계', travel, rangeScore(travel,[{max:8000,score:1.5},{min:8000,max:16000,score:2.5},{min:16000,max:32000,score:5},{min:32000,max:64000,score:7.5},{min:64000,score:10}])],
-    ['입·출구 표고차', v.elevationDiff, rangeScore(v.elevationDiff,[{max:100,score:.5},{min:100,max:200,score:1},{min:200,max:300,score:1.5},{min:300,score:2}])],
+    ['입·출구 표고차', v.elevationDiff, rangeScore(v.elevationDiff,[{max:10,score:.5},{min:10,max:20,score:1},{min:20,max:30,score:1.5},{min:30,score:2}])],
     ['진입부 경사도', v.approachGrade, v.approachGrade < 3 ? .5 : 1],
     ['터널높이', v.height, rangeScore(v.height,[{min:7.5,score:1},{min:5,max:7.5,score:2},{max:5,score:3}])],
     ['터널곡선반경', v.curveRadius, v.curveRadius >= 1800 ? .5 : 1],
@@ -59,7 +59,7 @@ function smallScores(v){
   const smallTruckTravel = lengthKm * v.smallTruckAadt;
   return [
     ['주행거리계', travel, rangeScore(travel,[{max:8000,score:1.5},{min:8000,max:16000,score:2.5},{min:16000,max:32000,score:5},{min:32000,max:64000,score:7.5},{min:64000,max:128000,score:10},{min:128000,max:256000,score:12.5},{min:256000,score:15}])],
-    ['입·출구 표고차', v.elevationDiff, rangeScore(v.elevationDiff,[{max:100,score:.5},{min:100,max:200,score:1},{min:200,max:300,score:1.5},{min:300,max:400,score:2},{min:400,max:500,score:2.5},{min:500,score:3}])],
+    ['입·출구 표고차', v.elevationDiff, rangeScore(v.elevationDiff,[{max:10,score:.5},{min:10,max:20,score:1},{min:20,max:30,score:1.5},{min:30,max:40,score:2},{min:40,max:50,score:2.5},{min:50,score:3}])],
     ['진입부 경사도', v.approachGrade, v.approachGrade < 3 ? .5 : 1],
     ['터널높이', v.height, rangeScore(v.height,[{min:7.5,score:1},{min:6,max:7.5,score:2},{min:4.5,max:6,score:3},{min:3,max:4.5,score:4},{max:3,score:5}])],
     ['터널곡선반경', v.curveRadius, v.curveRadius >= 1800 ? .5 : 1],
