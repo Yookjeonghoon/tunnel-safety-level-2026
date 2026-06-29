@@ -4,73 +4,121 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>도로터널 방재·환기시설 등급 산정기 2026</title>
+  <meta name="description" content="국토교통부예규 제461호(시행 2026.04.30) 기준 도로터널 방재·환기시설 등급 산정기" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
   <header class="hero">
-    <div>
-      <p class="eyebrow">국토교통부예규 제461호 · 시행 2026.04.30</p>
-      <h1>도로터널 방재·환기시설 등급 산정기</h1>
-      <p>터널 연장등급, 위험도지수(X), 방재등급을 계산합니다.</p>
+    <nav class="topbar" aria-label="상단 정보">
+      <span class="brand-mark">TS</span>
+      <span>Road Tunnel Safety Level</span>
+      <span class="version">2026 Edition · v0.2</span>
+    </nav>
+    <div class="hero-grid">
+      <div>
+        <p class="eyebrow">국토교통부예규 제461호 · 시행 2026.04.30</p>
+        <h1>도로터널 방재·환기시설 등급 산정기</h1>
+        <p class="lead">터널 연장등급, 위험도지수(X), 방재등급을 한 화면에서 계산하고 산정근거를 확인합니다.</p>
+      </div>
+      <aside class="hero-card" aria-label="기준 안내">
+        <strong>산정 기준</strong>
+        <p>「도로터널 방재·환기시설 설치 및 관리지침」 2026.04.30 일부개정 기준</p>
+        <small>※ 1차 구현: 등급·위험도 계산 중심. 시설별 설치기준 표는 후속 버전 추가.</small>
+      </aside>
     </div>
   </header>
 
   <main class="wrap">
-    <section class="card">
-      <h2>1. 기본 입력</h2>
-      <div class="grid">
-        <label>터널 종류
-          <select id="tunnelType">
-            <option value="normal">일반 도로터널</option>
-            <option value="small">소형차 전용터널</option>
-          </select>
-        </label>
-        <label>터널연장 L (m)
-          <input id="length" type="number" min="0" value="1000" />
-        </label>
-        <label>튜브당 연평균일교통량 AADT (대/일)
-          <input id="aadt" type="number" min="0" value="20000" />
-        </label>
-        <label>방음터널 여부
-          <select id="soundTunnel">
-            <option value="no">아니오</option>
-            <option value="yes">예</option>
-          </select>
-        </label>
+    <section class="notice" role="note">
+      <div>
+        <strong>작업 상태</strong>
+        <p>V0.2는 UI/시인성 개선판입니다. 계산 로직은 2026 지침 기준으로 검증 중이며, 결과는 공식 지침 원문과 함께 확인하세요.</p>
       </div>
     </section>
 
-    <section class="card">
-      <h2>2. 위험인자 입력</h2>
-      <div class="grid">
-        <label>입·출구 표고차 (m)<input id="elevationDiff" type="number" min="0" value="0" /></label>
-        <label>진입부 경사도 (%)<input id="approachGrade" type="number" min="0" step="0.1" value="0" /></label>
-        <label>터널높이 (m)<input id="height" type="number" min="0" step="0.1" value="7.5" /></label>
-        <label>터널곡선반경 (m)<input id="curveRadius" type="number" min="0" value="1800" /></label>
-        <label class="normal-only">대형차 혼입률 (%)<input id="heavyRate" type="number" min="0" step="0.1" value="10" /></label>
-        <label class="normal-only">대형차 통과대수 (대/일)<input id="heavyAadt" type="number" min="0" value="1000" /></label>
-        <label class="small-only hidden">소형화물 통과대수 (대/일)<input id="smallTruckAadt" type="number" min="0" value="500" /></label>
-        <label class="small-only hidden">배연구간 최대거리 (m)<input id="exhaustDistance" type="number" min="0" value="0" /></label>
-        <label class="small-only hidden">간이소방서 설치<select id="miniFireStation"><option value="yes">있음</option><option value="no">없음</option></select></label>
-        <label class="normal-only">위험물 감시시스템<select id="hazardMonitoring"><option value="yes">있음</option><option value="no">없음</option></select></label>
-        <label class="normal-only">위험물 유도시스템<select id="hazardGuidance"><option value="yes">있음</option><option value="no">없음</option></select></label>
-        <label>서비스수준<select id="los"><option value="A-C">LOS A~C</option><option value="D">LOS D</option><option value="E-F">LOS E~F</option></select></label>
-        <label>터널 내 합류/분류 개소<input id="mergeCount" type="number" min="0" value="0" /></label>
-        <label>진출부 1km 이내 교차로/신호등/TG<select id="exitControl"><option value="no">없음</option><option value="yes">있음</option></select></label>
-        <label>통행방식<select id="trafficDirection"><option value="oneWithShoulder">일방통행 · 갓길 있음</option><option value="oneNoShoulder">일방통행 · 갓길 없음</option><option value="twoWithShoulder">대면통행 · 갓길 있음</option><option value="twoNoShoulder">대면통행 · 갓길 없음</option></select></label>
-      </div>
-    </section>
+    <form id="calcForm" novalidate>
+      <section class="panel">
+        <div class="section-head">
+          <span class="step">01</span>
+          <div>
+            <h2>기본 조건</h2>
+            <p>터널 종류, 연장, 교통량, 방음터널 여부를 입력합니다.</p>
+          </div>
+        </div>
+        <div class="grid cols-4">
+          <label class="field">터널 종류
+            <select id="tunnelType">
+              <option value="normal">일반 도로터널</option>
+              <option value="small">소형차 전용터널</option>
+            </select>
+          </label>
+          <label class="field">터널연장 L (m)
+            <input id="length" type="number" min="0" step="1" value="1000" />
+          </label>
+          <label class="field">튜브당 AADT (대/일)
+            <input id="aadt" type="number" min="0" step="1" value="20000" />
+          </label>
+          <label class="field">방음터널 여부
+            <select id="soundTunnel">
+              <option value="no">아니오</option>
+              <option value="yes">예</option>
+            </select>
+          </label>
+        </div>
+      </section>
 
-    <section class="actions">
-      <button id="calcBtn">계산하기</button>
-      <button id="printBtn" class="secondary">인쇄/PDF</button>
-      <button id="jsonBtn" class="secondary">JSON 저장</button>
-    </section>
+      <section class="panel">
+        <div class="section-head">
+          <span class="step">02</span>
+          <div>
+            <h2>터널 제원</h2>
+            <p>종단경사, 높이, 곡선반경 등 위험도 산정에 필요한 구조 조건입니다.</p>
+          </div>
+        </div>
+        <div class="grid cols-4">
+          <label class="field">입·출구 표고차 (m)<input id="elevationDiff" type="number" min="0" step="1" value="0" /></label>
+          <label class="field">진입부 경사도 (%)<input id="approachGrade" type="number" min="0" step="0.1" value="0" /></label>
+          <label class="field">터널높이 (m)<input id="height" type="number" min="0" step="0.1" value="7.5" /></label>
+          <label class="field">터널곡선반경 (m)<input id="curveRadius" type="number" min="0" step="1" value="1800" /></label>
+        </div>
+      </section>
 
-    <section id="result" class="card result"></section>
+      <section class="panel">
+        <div class="section-head">
+          <span class="step">03</span>
+          <div>
+            <h2>교통·위험물 조건</h2>
+            <p>차종 구성, 위험물 대응시스템, 정체 관련 조건을 입력합니다.</p>
+          </div>
+        </div>
+        <div class="grid cols-3">
+          <label class="field normal-only">대형차 혼입률 (%)<input id="heavyRate" type="number" min="0" step="0.1" value="10" /></label>
+          <label class="field normal-only">대형차 통과대수 (대/일)<input id="heavyAadt" type="number" min="0" step="1" value="1000" /></label>
+          <label class="field small-only hidden">소형화물 통과대수 (대/일)<input id="smallTruckAadt" type="number" min="0" step="1" value="500" /></label>
+          <label class="field small-only hidden">배연구간 최대거리 (m)<input id="exhaustDistance" type="number" min="0" step="1" value="0" /></label>
+          <label class="field small-only hidden">간이소방서 설치<select id="miniFireStation"><option value="yes">있음</option><option value="no">없음</option></select></label>
+          <label class="field normal-only">위험물 감시시스템<select id="hazardMonitoring"><option value="yes">있음</option><option value="no">없음</option></select></label>
+          <label class="field normal-only">위험물 유도시스템<select id="hazardGuidance"><option value="yes">있음</option><option value="no">없음</option></select></label>
+          <label class="field">서비스수준<select id="los"><option value="A-C">LOS A~C</option><option value="D">LOS D</option><option value="E-F">LOS E~F</option></select></label>
+          <label class="field">터널 내 합류/분류 개소<input id="mergeCount" type="number" min="0" step="1" value="0" /></label>
+          <label class="field">진출부 1km 이내 교차로/신호등/TG<select id="exitControl"><option value="no">없음</option><option value="yes">있음</option></select></label>
+          <label class="field">통행방식<select id="trafficDirection"><option value="oneWithShoulder">일방통행 · 갓길 있음</option><option value="oneNoShoulder">일방통행 · 갓길 없음</option><option value="twoWithShoulder">대면통행 · 갓길 있음</option><option value="twoNoShoulder">대면통행 · 갓길 없음</option></select></label>
+        </div>
+      </section>
+
+      <section class="actions" aria-label="계산 버튼">
+        <button id="calcBtn" type="submit">등급 계산하기</button>
+        <button id="resetBtn" type="button" class="secondary">초기화</button>
+        <button id="printBtn" type="button" class="secondary">인쇄/PDF</button>
+        <button id="jsonBtn" type="button" class="secondary">JSON 저장</button>
+      </section>
+    </form>
+
+    <section id="result" class="panel result" aria-live="polite"></section>
 
     <section class="note">
-      <strong>주의:</strong> 본 산정기는 2026.04.30 지침 기준으로 구현 중인 초안입니다. 표 1.2.3~1.2.5의 시설별 설치기준은 다음 패키지에서 추가됩니다. 최종 판단은 공식 지침 원문으로 확인하세요.
+      <strong>주의</strong>
+      <p>본 산정기는 실무 검토를 돕기 위한 보조도구입니다. 법적·설계상 최종 판단은 공식 지침 원문, 관련 법령, 발주처·관리기관 검토 결과를 우선합니다.</p>
     </section>
   </main>
 
