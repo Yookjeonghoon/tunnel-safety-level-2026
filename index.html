@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>도로터널 방재·환기시설 등급 산정기 2026</title>
-  <meta name="description" content="국토교통부예규 제461호(시행 2026.04.30) 기준 도로터널 방재·환기시설 등급 산정기" />
+  <title>도로터널 방재·환기시설 검토시스템 2026</title>
+  <meta name="description" content="국토교통부예규 제461호(시행 2026.04.30) 기준 도로터널 방재·환기시설 검토시스템" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -12,18 +12,18 @@
     <nav class="topbar" aria-label="상단 정보">
       <span class="brand-mark">TS</span>
       <span>Road Tunnel Safety Level</span>
-      <span class="version">2026 Edition · v1.0 RC</span>
+      <span class="version">2026 Edition · Version 1.0 RC</span>
     </nav>
     <div class="hero-grid">
       <div>
         <p class="eyebrow">국토교통부예규 제461호 · 시행 2026.04.30</p>
-        <h1>도로터널 방재·환기시설 등급 산정기</h1>
-        <p class="lead">터널 연장등급, 위험도지수(X), 방재등급을 한 화면에서 계산하고 산정근거를 확인합니다.</p>
+        <h1>도로터널 방재·환기시설 검토시스템 2026</h1>
+        <p class="lead">도로터널의 연장등급, 위험도지수(X), 방재등급을 산정하고, 평가기준 및 등급별 방재시설 설치기준을 종합적으로 검토할 수 있습니다.</p>
       </div>
       <aside class="hero-card" aria-label="기준 안내">
-        <strong>산정 기준</strong>
+        <strong>적용 지침</strong>
         <p>「도로터널 방재·환기시설 설치 및 관리지침」 2026.04.30 일부개정 기준</p>
-        <small>※ V1.0 RC: 일반·소형차 전용·방음터널 산정 화면과 계산엔진을 통합했습니다.</small>
+        <small>※ V1.0 RC: 일반·소형차 전용·방음터널 검토 화면과 계산엔진을 통합했습니다.</small>
       </aside>
     </div>
   </header>
@@ -36,13 +36,6 @@
       </div>
     </section>
 
-    <nav class="tabbar" aria-label="주요 화면 전환">
-      <button type="button" class="tab-btn active" data-tab="calculator">계산기</button>
-      <button type="button" class="tab-btn" data-tab="criteria">평가기준</button>
-      <button type="button" class="tab-btn" data-tab="facilities">등급별 방재시설</button>
-    </nav>
-
-    <section id="tab-calculator" class="tab-panel active" aria-label="계산기">
 
 
     <section class="panel mode-panel" aria-label="사용 모드">
@@ -162,108 +155,10 @@
     </form>
 
     <section id="result" class="panel result" aria-live="polite"></section>
-    </section>
-
-    <section id="tab-criteria" class="tab-panel" aria-label="평가기준">
-      <section class="panel reference-panel">
-        <div class="section-head">
-          <span class="step">A</span>
-          <div>
-            <h2>평가기준</h2>
-            <p>2026.04.30 국토교통부예규 제461호의 터널 등급구분 및 위험도지수 산정기준을 계산기 기준표로 정리했습니다.</p>
-          </div>
-        </div>
-
-        <h3>표 1.2.1 등급구분 기준</h3>
-        <div class="details reference-table"><table>
-          <thead><tr><th>등급</th><th>일반 도로터널 연장등급</th><th>방음터널 연장등급</th><th>방재등급 위험도지수(X)</th></tr></thead>
-          <tbody>
-            <tr><td>1등급</td><td>3,000m 이상</td><td>3,000m 이상</td><td>X &gt; 29</td></tr>
-            <tr><td>2등급</td><td>1,000m 이상 ~ 3,000m 미만</td><td>1,000m 이상 ~ 3,000m 미만</td><td>19 &lt; X ≤ 29</td></tr>
-            <tr><td>3등급</td><td>500m 이상 ~ 1,000m 미만</td><td>250m 이상 ~ 1,000m 미만</td><td>14 &lt; X ≤ 19</td></tr>
-            <tr><td>4등급</td><td>500m 미만</td><td>250m 미만</td><td>X ≤ 14</td></tr>
-          </tbody>
-        </table></div>
-
-        <h3>위험도지수 산정 항목 · 일반 도로터널</h3>
-        <div class="details reference-table"><table>
-          <thead><tr><th>항목</th><th>구간/조건</th><th>점수</th></tr></thead>
-          <tbody>
-            <tr><td rowspan="5">주행거리계 L×AADT</td><td>80,000 미만</td><td>1.5</td></tr><tr><td>80,000 이상 ~ 160,000 미만</td><td>2.5</td></tr><tr><td>160,000 이상 ~ 320,000 미만</td><td>5</td></tr><tr><td>320,000 이상 ~ 640,000 미만</td><td>7.5</td></tr><tr><td>640,000 이상</td><td>10</td></tr>
-            <tr><td rowspan="4">입·출구 표고차</td><td>100m 미만</td><td>0.5</td></tr><tr><td>100m 이상 ~ 200m 미만</td><td>1</td></tr><tr><td>200m 이상 ~ 300m 미만</td><td>1.5</td></tr><tr><td>300m 이상</td><td>2</td></tr>
-            <tr><td>진입부 경사도</td><td>3% 미만 / 3% 이상</td><td>0.5 / 1</td></tr>
-            <tr><td>터널높이</td><td>7.5m 이상 / 5~7.5m / 5m 미만</td><td>1 / 2 / 3</td></tr>
-            <tr><td>터널곡선반경</td><td>1,800m 이상 / 1,800m 미만</td><td>0.5 / 1</td></tr>
-            <tr><td>대형차 혼입률</td><td>10% 미만 / 10~17.5% / 17.5~25% / 25% 이상</td><td>0.5 / 1 / 1.5 / 2</td></tr>
-            <tr><td>대형차 주행거리계</td><td>5,000 미만 / 5,000~10,000 / 10,000~25,000 / 25,000~50,000 / 50,000 이상</td><td>0.5 / 1 / 2 / 4 / 6</td></tr>
-            <tr><td>위험물 감시·유도시스템</td><td>있음 / 없음</td><td>0 / 1</td></tr>
-            <tr><td>서비스수준</td><td>LOS A~C / D / E~F</td><td>1 / 2 / 3</td></tr>
-            <tr><td>터널 내 합류·분류</td><td>없음 / 있음</td><td>0 / 2</td></tr>
-            <tr><td>진출부 1km 이내 교차로·신호등·TG</td><td>없음 / 있음</td><td>0 / 2</td></tr>
-            <tr><td>통행방식</td><td>일방통행 갓길 있음 / 일방통행 갓길 없음 / 대면통행 갓길 있음 / 대면통행 갓길 없음</td><td>1 / 2 / 5 / 6</td></tr>
-          </tbody>
-        </table></div>
-
-        <h3>위험도지수 산정 항목 · 소형차 전용터널 및 방음터널 추가항목</h3>
-        <div class="details reference-table"><table>
-          <thead><tr><th>구분</th><th>항목</th><th>구간/조건</th><th>점수</th></tr></thead>
-          <tbody>
-            <tr><td rowspan="4">소형차 전용</td><td>주행거리계</td><td>80,000 미만부터 2,560,000 이상까지 7구간</td><td>1.5~15</td></tr>
-            <tr><td>터널높이</td><td>7.5m 이상 / 6~7.5m / 4.5~6m / 3~4.5m / 3m 미만</td><td>1 / 2 / 3 / 4 / 5</td></tr>
-            <tr><td>배연구간·간이소방서</td><td>배연거리 및 간이소방서 설치 여부</td><td>조건별 반영</td></tr>
-            <tr><td>소형화물 주행거리계</td><td>1,000 미만 / 1,000~5,000 / 5,000~10,000 / 10,000 이상</td><td>0.5 / 1 / 1.5 / 2</td></tr>
-            <tr><td rowspan="4">방음터널 추가</td><td>방음판 재료 성능</td><td>불연 / 준불연 / 난연 / 기타 450℃ 이상 / 기타</td><td>0 / 0.5 / 1 / 2 / 4</td></tr>
-            <tr><td>중앙분리벽</td><td>설치 / 미설치</td><td>0 / 2</td></tr>
-            <tr><td>화재확산 방지구역</td><td>있음 / 없음</td><td>0 / 1</td></tr>
-            <tr><td>인접 민가 이격거리</td><td>50m 이상 / 30~50m / 10~30m / 10m 미만</td><td>0 / 1 / 1.5 / 2</td></tr>
-          </tbody>
-        </table></div>
-        <p class="ref-note">※ 이 화면은 계산기와 동일한 기준표를 빠르게 확인하기 위한 요약 화면입니다. 세부 예외와 주석은 지침 원문을 우선 확인하세요.</p>
-      </section>
-    </section>
-
-    <section id="tab-facilities" class="tab-panel" aria-label="등급별 방재시설">
-      <section class="panel reference-panel">
-        <div class="section-head">
-          <span class="step">B</span>
-          <div>
-            <h2>등급별 방재시설</h2>
-            <p>연장등급 및 방재등급에 따라 검토하는 방재시설을 빠르게 확인하는 요약표입니다.</p>
-          </div>
-        </div>
-        <div class="legend"><span><b>●</b> 연장등급 기준</span><span><b>○</b> 방재등급 기준</span><span><b>△</b> 조건부/검토</span></div>
-        <div class="details reference-table"><table>
-          <thead><tr><th>구분</th><th>시설</th><th>1등급</th><th>2등급</th><th>3등급</th><th>4등급</th><th>비고</th></tr></thead>
-          <tbody>
-            <tr><td rowspan="4">소화설비</td><td>소화기구</td><td>●</td><td>●</td><td>●</td><td>△</td><td>연장등급 기본시설</td></tr>
-            <tr><td>옥내소화전설비</td><td>●</td><td>●</td><td>△</td><td>-</td><td>연장·구조조건 확인</td></tr>
-            <tr><td>물분무소화설비</td><td>△</td><td>△</td><td>-</td><td>-</td><td>특수조건 및 위험도 검토</td></tr>
-            <tr><td>원격제어살수설비</td><td>△</td><td>△</td><td>△</td><td>-</td><td>소형차 전용·방음터널 검토</td></tr>
-            <tr><td rowspan="7">경보설비</td><td>비상경보설비</td><td>○</td><td>○</td><td>○</td><td>△</td><td>방재등급 기준</td></tr>
-            <tr><td>자동화재탐지설비</td><td>○</td><td>○</td><td>△</td><td>-</td><td>방재등급 기준</td></tr>
-            <tr><td>비상방송설비</td><td>○</td><td>○</td><td>○</td><td>△</td><td>방재등급 기준</td></tr>
-            <tr><td>긴급전화</td><td>○</td><td>○</td><td>○</td><td>△</td><td>방재등급 기준</td></tr>
-            <tr><td>CCTV</td><td>○</td><td>○</td><td>○</td><td>△</td><td>방재등급 기준</td></tr>
-            <tr><td>자동사고감지설비</td><td>△</td><td>△</td><td>-</td><td>-</td><td>관리체계 검토</td></tr>
-            <tr><td>터널진입차단설비</td><td>○</td><td>○</td><td>△</td><td>-</td><td>방재등급·연속터널 조건 확인</td></tr>
-            <tr><td rowspan="3">피난대피설비</td><td>비상조명등</td><td>●</td><td>●</td><td>●</td><td>△</td><td>연장등급 기준</td></tr>
-            <tr><td>유도등</td><td>●</td><td>●</td><td>●</td><td>△</td><td>연장등급 기준</td></tr>
-            <tr><td>피난연결통로/대피시설</td><td>●</td><td>●</td><td>△</td><td>-</td><td>쌍굴·대피공간 조건 확인</td></tr>
-            <tr><td rowspan="5">소화활동설비</td><td>제연설비</td><td>○</td><td>○</td><td>△</td><td>-</td><td>환기방식 및 위험도 확인</td></tr>
-            <tr><td>무선통신보조설비</td><td>○</td><td>○</td><td>○</td><td>△</td><td>소방활동 지원</td></tr>
-            <tr><td>연결송수관설비</td><td>●</td><td>●</td><td>△</td><td>-</td><td>연장등급·소방활동 조건</td></tr>
-            <tr><td>비상콘센트설비</td><td>○</td><td>○</td><td>△</td><td>-</td><td>소방활동 지원</td></tr>
-            <tr><td>제연보조설비</td><td>△</td><td>△</td><td>-</td><td>-</td><td>필요시 검토</td></tr>
-            <tr><td>비상전원설비</td><td>무정전전원/비상발전</td><td>○</td><td>○</td><td>△</td><td>-</td><td>설치 방재시설 전원조건과 연계</td></tr>
-          </tbody>
-        </table></div>
-        <p class="ref-note">※ 위 표는 계산기 내 빠른 확인용 요약표입니다. 시설별 설치간격, 예외, 권장시설, 방음터널 제외 가능 시설은 지침 표 1.2.3~1.2.5 및 원문 주석을 확인해야 합니다.</p>
-      </section>
-    </section>
 
     <section class="note">
       <strong>주의</strong>
-      <p>본 산정기는 실무 검토를 돕기 위한 보조도구입니다. 법적·설계상 최종 판단은 공식 지침 원문, 관련 법령, 발주처·관리기관 검토 결과를 우선합니다.</p>
+      <p>본 검토시스템은 실무 검토를 돕기 위한 보조도구입니다. 법적·설계상 최종 판단은 공식 지침 원문, 관련 법령, 발주처·관리기관 검토 결과를 우선합니다.</p>
     </section>
   </main>
 
