@@ -12,7 +12,7 @@
     <nav class="topbar" aria-label="상단 정보">
       <span class="brand-mark">TS</span>
       <span>Road Tunnel Safety Level</span>
-      <span class="version">2026 Edition · v0.4</span>
+      <span class="version">2026 Edition · v0.5</span>
     </nav>
     <div class="hero-grid">
       <div>
@@ -23,7 +23,7 @@
       <aside class="hero-card" aria-label="기준 안내">
         <strong>산정 기준</strong>
         <p>「도로터널 방재·환기시설 설치 및 관리지침」 2026.04.30 일부개정 기준</p>
-        <small>※ V0.4: 입력항목 도움말, 용어사전, 초보자/전문가 모드를 추가했습니다. 시설별 설치기준 표는 후속 버전에서 추가됩니다.</small>
+        <small>※ V0.5: 2026 기준 위험도 계산엔진을 보강하고 방음터널 추가 위험인자를 반영했습니다.</small>
       </aside>
     </div>
   </header>
@@ -32,7 +32,7 @@
     <section class="notice" role="note">
       <div>
         <strong>작업 상태</strong>
-        <p>V0.4는 지침 기반 도움말을 추가한 버전입니다. 각 입력항목의 ⓘ 버튼을 눌러 의미, 확인 위치, 계산 영향, 관련 기준을 확인할 수 있습니다. 현재 계산 로직은 2026 지침 기준으로 계속 검증 중입니다.</p>
+        <p>V0.5는 핵심 계산 완성 단계입니다. 일반 도로터널, 소형차 전용터널, 방음터널 추가 위험인자를 입력하여 위험도지수(X), 연장등급, 방재등급을 산정합니다.</p>
       </div>
     </section>
 
@@ -76,6 +76,32 @@
               <option value="no">아니오</option>
               <option value="yes">예</option>
             </select>
+          </label>
+        </div>
+        <div id="soundFields" class="grid cols-4 hidden" style="margin-top:15px">
+          <label class="field">방음판 재료 성능
+            <select id="soundPanelMaterial">
+              <option value="noncombustible">불연재료</option>
+              <option value="quasi">준불연재료</option>
+              <option value="flame">난연재료</option>
+              <option value="other450">기타재료 · 열분해온도 450℃ 이상</option>
+              <option value="other">기타재료 · 그 외</option>
+            </select>
+          </label>
+          <label class="field">중앙분리벽
+            <select id="centerBarrier">
+              <option value="yes">설치</option>
+              <option value="no">미설치</option>
+            </select>
+          </label>
+          <label class="field">화재확산 방지구역
+            <select id="fireSpreadZone">
+              <option value="yes">있음</option>
+              <option value="no">없음</option>
+            </select>
+          </label>
+          <label class="field">인접 민가 이격거리(m)
+            <input id="buildingDistance" type="number" min="0" step="1" value="50" />
           </label>
         </div>
       </section>

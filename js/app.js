@@ -2,7 +2,7 @@ const $ = (id) => document.getElementById(id);
 const numberValue = (id) => Number($(id).value || 0);
 
 const FIELD_IDS = [
-  'tunnelType','length','aadt','soundTunnel','elevationDiff','approachGrade','height','curveRadius',
+  'tunnelType','length','aadt','soundTunnel','soundPanelMaterial','centerBarrier','fireSpreadZone','buildingDistance','elevationDiff','approachGrade','height','curveRadius',
   'heavyRate','heavyAadt','smallTruckAadt','exhaustDistance','miniFireStation','hazardMonitoring','hazardGuidance',
   'los','mergeCount','exitControl','trafficDirection'
 ];
@@ -15,7 +15,7 @@ const LABELS = {
   miniFireStation:{yes:'있음', no:'없음'},
   los:{'A-C':'LOS A~C', D:'LOS D', 'E-F':'LOS E~F'},
   exitControl:{no:'없음', yes:'있음'},
-  trafficDirection:{oneWithShoulder:'일방통행 · 갓길 있음', oneNoShoulder:'일방통행 · 갓길 없음', twoWithShoulder:'대면통행 · 갓길 있음', twoNoShoulder:'대면통행 · 갓길 없음'}
+  trafficDirection:{oneWithShoulder:'일방통행 · 갓길 있음', oneNoShoulder:'일방통행 · 갓길 없음', twoWithShoulder:'대면통행 · 갓길 있음', twoNoShoulder:'대면통행 · 갓길 없음'}, soundPanelMaterial:{noncombustible:'불연재료', quasi:'준불연재료', flame:'난연재료', other450:'기타재료·450℃ 이상', other:'기타재료·그 외'}, centerBarrier:{yes:'설치', no:'미설치'}, fireSpreadZone:{yes:'있음', no:'없음'}
 };
 
 function labelValue(key, value){
@@ -28,6 +28,10 @@ function getInputValues(){
     length: numberValue('length'),
     aadt: numberValue('aadt'),
     soundTunnel: $('soundTunnel').value,
+    soundPanelMaterial: $('soundPanelMaterial').value,
+    centerBarrier: $('centerBarrier').value,
+    fireSpreadZone: $('fireSpreadZone').value,
+    buildingDistance: numberValue('buildingDistance'),
     elevationDiff: numberValue('elevationDiff'),
     approachGrade: numberValue('approachGrade'),
     height: numberValue('height'),
@@ -50,6 +54,8 @@ function setTunnelTypeFields(){
   const isSmall = $('tunnelType').value === 'small';
   document.querySelectorAll('.small-only').forEach(el => el.classList.toggle('hidden', !isSmall));
   document.querySelectorAll('.normal-only').forEach(el => el.classList.toggle('hidden', isSmall));
+  const sf = $('soundFields');
+  if(sf) sf.classList.toggle('hidden', $('soundTunnel').value !== 'yes');
 }
 
 function validateInputs(){
@@ -92,6 +98,7 @@ function renderResult(result, input){
     </tr>`).join('');
 
   const formula = result.rows.map(r => fmt(r[2])).join(' + ');
+  const facilityRows = renderFacilitySummary(result.finalGrade, result.lengthGrade);
 
   el.innerHTML = `
     <div class="result-title">
@@ -119,16 +126,17 @@ function renderResult(result, input){
       </div>
     </details>
 
-    <details class="explain">
-      <summary>후속 반영 예정 항목</summary>
-      <p>시설별 설치기준 표, 방음터널 세부 위험인자, 보고서형 PDF 출력은 V0.4 이후 단계에서 추가됩니다.</p>
+    <details class="explain" open>
+      <summary>방재시설 설치기준 요약</summary>
+      <div class="details"><table><thead><tr><th>시설</th><th>적용 판단</th><th>비고</th></tr></thead><tbody>${facilityRows}</tbody></table></div>
+      <p style="padding:12px 16px;color:#5b6472">표 1.2.3의 세부 예외·권장시설·보강설비는 설계조건에 따라 달라질 수 있으므로 최종 적용 전 원문표를 확인하세요.</p>
     </details>`;
   el.classList.add('show');
   el.scrollIntoView({behavior:'smooth', block:'start'});
 }
 
 function downloadJson(data){
-  const payload = {meta:{standard:'국토교통부예규 제461호, 시행 2026.04.30', version:'0.4'}, input:getInputValues(), result:data};
+  const payload = {meta:{standard:'국토교통부예규 제461호, 시행 2026.04.30', version:'0.5'}, input:getInputValues(), result:data};
   const blob = new Blob([JSON.stringify(payload, null, 2)], {type:'application/json'});
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
@@ -155,6 +163,7 @@ function restoreState(){
 
 let lastResult = null;
 $('tunnelType').addEventListener('change', setTunnelTypeFields);
+$('soundTunnel').addEventListener('change', setTunnelTypeFields);
 $('calcForm').addEventListener('submit', (e) => {
   e.preventDefault();
   if(!validateInputs()) return alert('터널연장은 0보다 커야 하며, 숫자 입력값은 0 이상이어야 합니다.');
@@ -187,11 +196,32 @@ $('shareBtn').addEventListener('click', async () => {
 });
 
 
+function renderFacilitySummary(finalGrade, lengthGrade){
+  const rows = [
+    ['소화기구','설치','연장등급 기준 기본시설'],
+    ['옥내소화전설비', finalGrade <= 2 || lengthGrade <= 2 ? '설치 검토/대상' : '조건부', '연장등급·방재등급 병행'],
+    ['비상경보설비', finalGrade <= 3 ? '설치' : '조건부', '방재등급 기준'],
+    ['자동화재탐지설비', finalGrade <= 2 ? '설치' : '조건부', '방재등급 기준'],
+    ['비상방송설비', finalGrade <= 3 ? '설치' : '조건부', '방재등급 기준'],
+    ['CCTV', finalGrade <= 3 ? '설치' : '조건부', '방재등급 기준'],
+    ['진입차단설비', finalGrade <= 3 ? '설치 검토' : '조건부', '방재등급 기준'],
+    ['비상조명등', lengthGrade <= 3 ? '설치' : '조건부', '연장등급 기준'],
+    ['피난연결통로/대피시설', lengthGrade <= 3 ? '설치 검토' : '조건부', '연장 및 구조조건 확인'],
+    ['제연설비', finalGrade <= 2 ? '설치 검토' : '조건부', '환기방식·위험도 확인'],
+    ['비상전원설비', finalGrade <= 3 ? '설치 검토' : '조건부', '시설 구성에 따라 결정']
+  ];
+  return rows.map(r=>`<tr><td>${r[0]}</td><td><b>${r[1]}</b></td><td>${r[2]}</td></tr>`).join('');
+}
+
 const HELP_DATA = {
   tunnelType:{title:'터널 종류',summary:'일반 도로터널 또는 소형차 전용터널을 선택합니다.',why:'소형차 전용터널은 통과 가능한 차종과 방재 대응 조건이 달라 위험도 산정 항목이 일부 달라집니다.',where:['도로계획/설계보고서','도로관리기관의 터널 기본현황','소형차 전용도로 지정 자료'],basis:'제1편 1.2 적용범위, 2.3.2 위험도지수 산정기준',example:'일반 국도 터널은 일반 도로터널, 소형자동차만 통과 가능한 지하도로는 소형차 전용터널을 선택합니다.',impact:'선택에 따라 계산 항목이 자동 전환됩니다.'},
   length:{title:'터널연장 L',summary:'터널 입구부부터 출구부까지의 길이입니다. 단위는 m입니다.',why:'연장등급 산정의 핵심 입력값이며, AADT와 곱해 주행거리계 위험도에도 반영됩니다.',where:['터널 일반도','도로설계보고서','시설물대장 또는 유지관리대장'],basis:'제1편 2.3.1 터널 등급구분, 2.3.2 주행거리계',example:'1.25 km 터널은 1250으로 입력합니다.',impact:'연장이 길수록 연장등급 및 주행거리계 점수가 커질 수 있습니다.'},
   aadt:{title:'튜브당 AADT',summary:'목표연도의 연평균일교통량입니다. 일방통행 터널은 튜브당 교통량을 입력합니다.',why:'터널 이용 차량이 많을수록 사고 노출 가능성이 커져 위험도지수에 반영됩니다.',where:['교통량 조사보고서','교통영향평가','실시설계보고서','관리기관 교통량 통계'],basis:'제1편 1.3 정의 및 2.3.2 주행거리계',example:'튜브당 20,000대/일이면 20000을 입력합니다.',impact:'터널연장 × AADT가 주행거리계 점수로 변환됩니다.'},
-  soundTunnel:{title:'방음터널 여부',summary:'터널형 방음시설이면 “예”를 선택합니다.',why:'방음터널은 일반 터널과 다른 화재 확산 특성과 시설 특성이 있어 일부 기준을 별도로 고려합니다.',where:['시설물 명칭 및 설계도서','방음시설 설계보고서','관리기관 시설대장'],basis:'제1편 1.3 정의, 2.1 일반사항, 2.3.2 방음터널 추가 위험인자',example:'도로 위를 덮는 터널형 방음시설이면 예를 선택합니다.',impact:'연장등급 기준이 일부 달라지며 후속 버전에서 방음터널 세부 항목을 추가 반영합니다.'},
+  soundPanelMaterial:{title:'방음판 재료 성능',summary:'방음터널 방음판의 방화성능 재료 등급을 선택합니다.',why:'방음판 재료는 화재확산 위험도에 직접 반영됩니다.',where:['방음시설 설계도서','자재 성능시험 성적서','방화성능 검토서'],basis:'표 1.2.2(c) 방음터널 위험도지수',example:'준불연 성능이면 준불연재료를 선택합니다.',impact:'불연 0점, 준불연 0.5점, 난연 1점, 기타재료는 2~4점입니다.'},
+  centerBarrier:{title:'중앙분리벽',summary:'방음터널 내 중앙분리벽 설치 여부입니다.',why:'반대방향 터널로 화재가 확산되는 것을 방지하는 조건입니다.',where:['방음터널 횡단면도','방재계획서'],basis:'표 1.2.2(c) 방음터널 위험도지수',example:'중앙분리벽이 계획되어 있으면 설치를 선택합니다.',impact:'미설치 시 2점이 추가됩니다.'},
+  fireSpreadZone:{title:'화재확산 방지구역',summary:'종방향 화재확산을 방지하기 위한 구획 설치 여부입니다.',why:'화재가 방음터널 전체로 확산되는 위험을 줄입니다.',where:['방음터널 상세도','방재계획서'],basis:'표 1.2.2(c) 방음터널 위험도지수',example:'50m 이내 간격의 확산방지구간이 있으면 있음을 선택합니다.',impact:'없음 시 1점이 추가됩니다.'},
+  buildingDistance:{title:'인접 민가 이격거리',summary:'방음터널 측벽에서 가장 가까운 민가까지의 거리입니다.',why:'화재 시 주변 건축물 영향 가능성을 반영합니다.',where:['현황측량도','배치도','현장조사'],basis:'표 1.2.2(c) 방음터널 위험도지수',example:'가장 가까운 민가가 35m이면 35를 입력합니다.',impact:'50m 이상 0점, 거리가 가까울수록 점수가 증가합니다.'},
+  soundTunnel:{title:'방음터널 여부',summary:'터널형 방음시설이면 “예”를 선택합니다.',why:'방음터널은 일반 터널과 다른 화재 확산 특성과 시설 특성이 있어 일부 기준을 별도로 고려합니다.',where:['시설물 명칭 및 설계도서','방음시설 설계보고서','관리기관 시설대장'],basis:'제1편 1.3 정의, 2.1 일반사항, 2.3.2 방음터널 추가 위험인자',example:'도로 위를 덮는 터널형 방음시설이면 예를 선택합니다.',impact:'연장등급 기준이 일부 달라지며 방음터널 추가 위험인자 입력항목이 표시됩니다.'},
   elevationDiff:{title:'입·출구 표고차',summary:'터널 입구와 출구의 높이 차이입니다. 단위는 m입니다.',why:'표고차가 크면 종단 방향 기류와 피난·제연 조건에 영향을 줄 수 있습니다.',where:['종단면도','도로설계보고서','터널 일반도'],basis:'제1편 2.3.2 터널제원',example:'입구 120m, 출구 240m이면 표고차 120을 입력합니다.',impact:'표고차가 클수록 해당 위험도 점수가 증가합니다.'},
   approachGrade:{title:'진입부 경사도',summary:'터널 진입부의 종단경사입니다. 단위는 %입니다.',why:'경사가 크면 차량 주행 안정성, 정체, 화재 시 연기 거동에 영향을 줄 수 있습니다.',where:['종단면도','도로설계보고서','선형계산서'],basis:'제1편 2.3.2 터널제원',example:'3.2% 경사는 3.2로 입력합니다.',impact:'현재 로직에서는 3% 미만과 3% 이상을 구분합니다.'},
   height:{title:'터널높이',summary:'터널 내부 유효 높이 또는 시설한계와 관련된 높이 조건입니다. 단위는 m입니다.',why:'높이가 낮을수록 열과 연기가 상대적으로 집중될 수 있어 위험도 산정에 반영됩니다.',where:['표준횡단면도','건축한계/시설한계 도면','터널 설계보고서'],basis:'제1편 2.3.2 터널제원',example:'유효 높이가 7.5m이면 7.5로 입력합니다.',impact:'높이가 낮을수록 점수가 커질 수 있습니다.'},

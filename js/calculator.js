@@ -64,9 +64,19 @@ function smallScores(v){
     ['통행방식', v.trafficDirection, SAFETY_2026.direction[v.trafficDirection] || 0]
   ];
 }
+function soundScores(v){
+  if(v.soundTunnel !== 'yes') return [];
+  const materialScores = {noncombustible:0, quasi:.5, flame:1, other450:2, other:4};
+  return [
+    ['방음판 재료 성능', v.soundPanelMaterial, materialScores[v.soundPanelMaterial] ?? 0],
+    ['중앙분리벽', v.centerBarrier, v.centerBarrier === 'yes' ? 0 : 2],
+    ['화재확산 방지구역', v.fireSpreadZone, v.fireSpreadZone === 'yes' ? 0 : 1],
+    ['인접 민가 이격거리', v.buildingDistance, rangeScore(v.buildingDistance,[{min:50,score:0},{min:30,max:50,score:1},{min:10,max:30,score:1.5},{max:10,score:2}])]
+  ];
+}
 function calculate(v){
   const isSound = v.soundTunnel === 'yes';
-  const rows = v.tunnelType === 'small' ? smallScores(v) : normalScores(v);
+  const rows = (v.tunnelType === 'small' ? smallScores(v) : normalScores(v)).concat(soundScores(v));
   const riskIndex = rows.reduce((s,r)=>s+Number(r[2]||0),0);
   const lGrade = lengthGrade(v.length, isSound);
   const rGrade = rawRiskGrade(riskIndex);
