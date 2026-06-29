@@ -342,3 +342,18 @@ rangeWarnings();
 
 
 restoreState();
+
+// V1.0 RC2: 계산기 / 평가기준 / 등급별 방재시설 탭 전환
+function installTabs(){
+  const buttons = document.querySelectorAll('.tab-btn');
+  const panels = document.querySelectorAll('.tab-panel');
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.tab;
+      buttons.forEach(b => b.classList.toggle('active', b === btn));
+      panels.forEach(p => p.classList.toggle('active', p.id === `tab-${target}`));
+      window.scrollTo({top: document.querySelector('.tabbar').offsetTop - 12, behavior:'smooth'});
+    });
+  });
+}
+installTabs();
