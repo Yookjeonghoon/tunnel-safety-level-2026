@@ -3,27 +3,27 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>도로터널 방재·환기시설 등급 산정기 2026</title>
-  <meta name="description" content="국토교통부예규 제461호(시행 2026.04.30) 기준 도로터널 방재·환기시설 등급 산정기" />
+  <title>도로터널 방재·환기시설 검토시스템 2026</title>
+  <meta name="description" content="국토교통부예규 제461호(시행 2026.04.30) 기준 도로터널 방재·환기시설 검토시스템" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
   <header class="hero">
     <nav class="topbar" aria-label="상단 정보">
       <span class="brand-mark">TS</span>
-      <span>Road Tunnel Safety Level</span>
-      <span class="version">2026 Edition · v1.0 RC</span>
+      <span>Road Tunnel Safety Review System</span>
+      <span class="version">2026 Edition · v1.2</span>
     </nav>
     <div class="hero-grid">
       <div>
         <p class="eyebrow">국토교통부예규 제461호 · 시행 2026.04.30</p>
-        <h1>도로터널 방재·환기시설 등급 산정기</h1>
-        <p class="lead">터널 연장등급, 위험도지수(X), 방재등급을 한 화면에서 계산하고 산정근거를 확인합니다.</p>
+        <h1>도로터널 방재·환기시설 검토시스템</h1>
+        <p class="lead">위험도지수(X), 연장등급, 방재등급 및 방재시설 적용기준을 자동으로 검토하고 산정근거를 제공합니다.</p>
       </div>
       <aside class="hero-card" aria-label="기준 안내">
-        <strong>산정 기준</strong>
+        <strong>검토 기준</strong>
         <p>「도로터널 방재·환기시설 설치 및 관리지침」 2026.04.30 일부개정 기준</p>
-        <small>※ V1.0 RC: 일반·소형차 전용·방음터널 산정 화면과 계산엔진을 통합했습니다.</small>
+        <small>일반 도로터널, 소형차 전용터널 및 방음터널의 위험도지수(X), 연장등급, 방재등급을 자동으로 검토합니다.</small>
       </aside>
     </div>
   </header>
@@ -32,7 +32,7 @@
     <section class="notice" role="note">
       <div>
         <strong>작업 상태</strong>
-        <p>V1.0 RC는 실제 계산 테스트용 배포본입니다. 입력 후 위험도지수(X), 연장등급, 방재등급, 계산근거 및 시설기준 요약을 확인할 수 있습니다.</p>
+        <p>본 시스템은 「도로터널 방재·환기시설 설치 및 관리지침」(국토교통부예규 제461호)에 따른 위험도지수(X), 연장등급, 방재등급 및 방재시설 적용기준 검토를 지원합니다.</p>
       </div>
     </section>
 
@@ -181,7 +181,7 @@
           <tbody>
             <tr><td>1</td><td>3,000m 이상<br>(L ≥ 3,000m)</td><td>3,000m 이상<br>(L ≥ 3,000m)</td><td>X &gt; 29</td></tr>
             <tr><td>2</td><td>1,000m 이상 ~ 3,000m 미만<br>(1,000 ≤ L &lt; 3,000m)</td><td>1,000m 이상 ~ 3,000m 미만<br>(1,000 ≤ L &lt; 3,000m)</td><td>19 &lt; X ≤ 29</td></tr>
-            <tr><td>3</td><td>500m 이상 ~ 1,000m 미만<br>(500 ≤ L &lt; 1,000m)</td><td>250m 이상 ~ 1,000m 미만<br>(250 ≤ L &lt; 1,000m)</td><td>14 &lt; X ≤ 19</td></tr>
+            <tr><td>3</td><td>50m 이상 ~ 1,000m 미만<br>(500 ≤ L &lt; 1,000m)</td><td>250m 이상 ~ 1,000m 미만<br>(250 ≤ L &lt; 1,000m)</td><td>14 &lt; X ≤ 19</td></tr>
             <tr><td>4</td><td>500m 미만<br>(L &lt; 500m)</td><td>250m 미만<br>(L &lt; 250m)</td><td>X ≤ 14</td></tr>
           </tbody>
         </table></div>
@@ -195,10 +195,10 @@
             <tr><td>16,000 이상 ~ 32,000 미만</td><td>5.0</td></tr>
             <tr><td>32,000 이상 ~ 64,000 미만</td><td>7.5</td></tr>
             <tr><td>64,000 이상</td><td>10.0</td></tr>
-            <tr><td rowspan="9">터널특성</td><td rowspan="4">입·출구 표고차(m)</td><td>100 미만</td><td>0.5</td></tr>
-            <tr><td>100 이상 ~ 200 미만</td><td>1.0</td></tr>
-            <tr><td>200 이상 ~ 300 미만</td><td>1.5</td></tr>
-            <tr><td>300 이상</td><td>2.0</td></tr>
+            <tr><td rowspan="9">터널특성</td><td rowspan="4">입·출구 표고차(m)</td><td>10 미만</td><td>0.5</td></tr>
+            <tr><td>10 이상 ~ 20 미만</td><td>1.0</td></tr>
+            <tr><td>20 이상 ~ 30 미만</td><td>1.5</td></tr>
+            <tr><td>30 이상</td><td>2.0</td></tr>
             <tr><td rowspan="2">진입부 경사도(%)</td><td>3.0 미만</td><td>0.5</td></tr>
             <tr><td>3.0 이상</td><td>1.0</td></tr>
             <tr><td rowspan="3">터널높이(m)</td><td>7.50 이상</td><td>1.0</td></tr>
@@ -211,9 +211,9 @@
             <tr><td>17.50 이상 ~ 25 미만</td><td>1.5</td></tr>
             <tr><td>25 이상</td><td>2.0</td></tr>
             <tr><td rowspan="5">대형차 주행거리계<br>(대·km/tube·day)</td><td>500 미만</td><td>0.5</td></tr>
-            <tr><td>500 이상 ~ 1,000 미만</td><td>1</td></tr>
+            <tr><td>50 이상 ~ 1,000 미만</td><td>1</td></tr>
             <tr><td>1,000 이상 ~ 2,500 미만</td><td>2</td></tr>
-            <tr><td>2,500 이상 ~ 5,000 미만</td><td>4</td></tr>
+            <tr><td>2,50 이상 ~ 5,000 미만</td><td>4</td></tr>
             <tr><td>5,000 이상</td><td>6</td></tr>
             <tr><td rowspan="2">감시시스템</td><td>있음</td><td>0</td></tr>
             <tr><td>없음</td><td>1</td></tr>
@@ -243,12 +243,12 @@
             <tr><td>64,000 이상 ~ 128,000 미만</td><td>10.0</td></tr>
             <tr><td>128,000 이상 ~ 256,000 미만</td><td>12.5</td></tr>
             <tr><td>256,000 이상</td><td>15.0</td></tr>
-            <tr><td rowspan="14">터널특성</td><td rowspan="6">입·출구 표고차(m)</td><td>100 미만</td><td>0.5</td></tr>
-            <tr><td>100 이상 ~ 200 미만</td><td>1.0</td></tr>
-            <tr><td>200 이상 ~ 300 미만</td><td>1.5</td></tr>
-            <tr><td>300 이상 ~ 400 미만</td><td>2.0</td></tr>
-            <tr><td>400 이상 ~ 500 미만</td><td>2.5</td></tr>
-            <tr><td>500 이상</td><td>3.0</td></tr>
+            <tr><td rowspan="14">터널특성</td><td rowspan="6">입·출구 표고차(m)</td><td>10 미만</td><td>0.5</td></tr>
+            <tr><td>10 이상 ~ 20 미만</td><td>1.0</td></tr>
+            <tr><td>20 이상 ~ 30 미만</td><td>1.5</td></tr>
+            <tr><td>30 이상 ~ 40 미만</td><td>2.0</td></tr>
+            <tr><td>40 이상 ~ 50 미만</td><td>2.5</td></tr>
+            <tr><td>50 이상</td><td>3.0</td></tr>
             <tr><td rowspan="2">진입부 경사도(%)</td><td>3.0 미만</td><td>0.5</td></tr>
             <tr><td>3.0 이상</td><td>1.0</td></tr>
             <tr><td rowspan="5">터널높이(m)</td><td>7.50 이상</td><td>1.0</td></tr>
@@ -260,7 +260,7 @@
             <tr><td>1,800 미만</td><td>1.0</td></tr>
             <tr><td rowspan="5">터널특성</td><td rowspan="4">배연구간(m)</td><td>없음</td><td>3.0</td></tr>
             <tr><td>500 미만</td><td>0.0</td></tr>
-            <tr><td>500 이상 ~ 3,000 미만</td><td>1.0</td></tr>
+            <tr><td>50 이상 ~ 3,000 미만</td><td>1.0</td></tr>
             <tr><td>3,000 이상</td><td>2.0</td></tr>
             <tr><td>간이소방서</td><td>없음 / 있음</td><td>2.0 / 0.0</td></tr>
             <tr><td rowspan="4">소형화물</td><td rowspan="4">소형화물 주행거리계<br>(대·km/tube·day)</td><td>1,000 미만</td><td>0.5</td></tr>
