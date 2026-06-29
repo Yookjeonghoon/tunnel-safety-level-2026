@@ -136,7 +136,7 @@ function renderResult(result, input){
 }
 
 function downloadJson(data){
-  const payload = {meta:{standard:'국토교통부예규 제461호, 시행 2026.04.30', version:'0.5'}, input:getInputValues(), result:data};
+  const payload = {meta:{standard:'국토교통부예규 제461호, 시행 2026.04.30', version:'1.0-rc1'}, input:getInputValues(), result:data};
   const blob = new Blob([JSON.stringify(payload, null, 2)], {type:'application/json'});
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
